@@ -1,0 +1,55 @@
+@import "tailwindcss";
+
+@theme {
+  --color-zinc-950: #09090b;
+}
+
+body {
+  background-color: #09090b;
+  color: #f4f4f5;
+  overflow: hidden;
+}
+
+/* React Flow Custom Theme */
+.react-flow__background {
+  background-color: #09090b;
+  background-image: 
+    radial-gradient(#27272a 0.5px, transparent 0.5px),
+    radial-gradient(#27272a 0.5px, #09090b 0.5px);
+  background-size: 20px 20px;
+  background-position: 0 0, 10px 10px;
+}
+
+.react-flow__edge-path {
+  stroke-width: 2;
+  transition: all 0.3s ease;
+}
+
+.react-flow__controls {
+  background: #18181b !important;
+  border: 1px solid #27272a !important;
+  box-shadow: none !important;
+}
+
+.react-flow__controls-button {
+  border-bottom: 1px solid #27272a !important;
+  fill: #71717a !important;
+}
+
+.react-flow__controls-button:hover {
+  background: #27272a !important;
+}
+
+.react-flow__minimap {
+  background: #18181b !important;
+  border-radius: 4px;
+}
+
+.react-flow__node {
+  cursor: grab;
+}
+
+.react-flow__node:active {
+  cursor: grabbing;
+}
+

@@ -1,0 +1,53 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    // Helper functions
+    function isValidId(id) {
+      return id is string && id.size() <= 128 && id.matches('^[a-zA-Z0-9_\\-]+$');
+    }
+
+    function incoming() {
+      return request.resource.data;
+    }
+
+    function existing() {
+      return resource.data;
+    }
+
+    // DEMO MODE: Security is relaxed because the user requested a simple manual login system 
+    // without using Firebase Authentication for demo purposes.
+    
+    // Default deny for everything else
+    match /{document=**} {
+      allow read, write: if false;
+    }
+
+    // Manual Login Collection
+    match /detectives/{badgeId} {
+      // Allow checking for existence and verifying code
+      allow get: if true;
+      // Allow creating new accounts
+      allow create: if isValidId(badgeId) 
+        && incoming().badgeId == badgeId
+        && incoming().accessCode is string
+        && incoming().accessCode.size() >= 4;
+    }
+
+    // Cases collection
+    match /cases/{caseId} {
+      // Allow listing cases if filtered by userId (clue_matrix_session)
+      // Note: This is NOT secure in production without request.auth
+      allow list: if true; 
+      
+      allow get: if true;
+      
+      allow create: if isValidId(caseId)
+        && incoming().userId is string
+        && incoming().title is string;
+        
+      allow update: if incoming().userId == existing().userId;
+
+      allow delete: if true; 
+    }
+  }
+}

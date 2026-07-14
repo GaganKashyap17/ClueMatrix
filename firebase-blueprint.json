@@ -1,0 +1,39 @@
+{
+  "entities": {
+    "Case": {
+      "title": "Investigation Case",
+      "description": "A collection of nodes and edges representing an investigation",
+      "type": "object",
+      "properties": {
+        "title": { "type": "string", "description": "The name of the case" },
+        "nodes": { "type": "array", "description": "List of detective nodes" },
+        "edges": { "type": "array", "description": "List of connecting edges" },
+        "userId": { "type": "string", "description": "UID of the investigator" },
+        "createdAt": { "type": "string", "format": "date-time" },
+        "updatedAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["title", "nodes", "edges", "userId", "createdAt", "updatedAt"]
+    },
+    "Detective": {
+      "title": "Investigator Account",
+      "description": "A simple record for demo login",
+      "type": "object",
+      "properties": {
+        "badgeId": { "type": "string" },
+        "accessCode": { "type": "string" },
+        "createdAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["badgeId", "accessCode", "createdAt"]
+    }
+  },
+  "firestore": {
+    "cases/{caseId}": {
+      "schema": "Case",
+      "description": "Storage for investigation cases"
+    },
+    "detectives/{badgeId}": {
+      "schema": "Detective",
+      "description": "Manual login accounts for demo"
+    }
+  }
+}
